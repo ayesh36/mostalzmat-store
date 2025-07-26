@@ -16,13 +16,12 @@ if (process.env.DATABASE_URL) {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
-    max: 2, // تقليل عدد الاتصالات للاستقرار
+    max: 2,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 60000,
     statementTimeout: 30000
   });
   
-  // معالجة أخطاء الاتصال
   pool.on('error', (err) => {
     console.error('Database connection error:', err);
   });
@@ -37,7 +36,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Sample data (backup if no database)
+// Categories data
 const categories = [
   { id: 1, name: "Cooking Tools", nameAr: "أدوات الطهي", icon: "🍳" },
   { id: 2, name: "Tableware", nameAr: "أدوات المائدة", icon: "🍽️" },
@@ -48,6 +47,7 @@ const categories = [
   { id: 7, name: "Small Appliances", nameAr: "أجهزة كهربائية صغيرة", icon: "⚡" }
 ];
 
+// Sample products data
 const sampleProducts = [
   { id: 213, name: "ساعة جدراية", price: 50000, productCode: "BYT58434125", rating: 4.5, reviewCount: 12, categoryId: 3 },
   { id: 212, name: "سيت شكردان", price: 35000, productCode: "BYT58434124", rating: 4.3, reviewCount: 8, categoryId: 2 },
@@ -71,10 +71,9 @@ const sampleProducts = [
   { id: 194, name: "طقم توابل وبهارات", price: 45000, productCode: "BYT58434106", rating: 4.2, reviewCount: 17, categoryId: 3 }
 ];
 
-// Routes
+// Main homepage route
 app.get('/', (req, res) => {
-  res.send(\`
-<!DOCTYPE html>
+  const htmlContent = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -93,7 +92,7 @@ app.get('/', (req, res) => {
     .category-btn { background: #f0fdf4; border: 2px solid #0f766e; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
     .category-btn:hover, .category-btn.active { background: #0f766e; color: white; }
     .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-    .product-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 1rem; background: #f9fafb; transition: transform 0.3s; position: relative; }
+    .product-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 1rem; background: #f9fafb; transition: transform 0.3s; }
     .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
     .product-image { width: 100%; height: 120px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 1rem; }
     .product-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1f2937; }
@@ -102,19 +101,15 @@ app.get('/', (req, res) => {
     .product-rating { font-size: 0.9rem; color: #6b7280; margin-bottom: 1rem; }
     .btn { background: #0f766e; color: white; padding: 0.6rem 1rem; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer; width: 100%; transition: background 0.3s; }
     .btn:hover { background: #0d9488; }
-    .btn-small { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
     .load-more { text-align: center; margin: 2rem 0; }
     .pagination { text-align: center; margin: 2rem 0; color: #6b7280; }
     .contact-info { background: #0f766e; color: white; padding: 2rem; border-radius: 12px; text-align: center; margin: 2rem 0; }
     .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
     .feature { text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-radius: 12px; }
-    .feature-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-    .feature-title { font-weight: 600; margin-bottom: 0.5rem; color: #0f766e; }
     @media (max-width: 768px) { 
       .container { padding: 10px; } 
       .logo { font-size: 2rem; }
       .products-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-      .features { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -123,7 +118,7 @@ app.get('/', (req, res) => {
     <div class="header">
       <div class="logo">🏠 مستلزمات بيوتنا</div>
       <div class="tagline">المتجر الأحدث في العراق</div>
-      <div style="margin-top: 1rem; font-size: 1rem;">177 منتج متاح | توصيل مجاني فوق 100,000 د.ع</div>
+      <div style="margin-top: 1rem;">177 منتج متاح | توصيل مجاني فوق 100,000 د.ع</div>
     </div>
     
     <div class="main-content">
@@ -141,23 +136,23 @@ app.get('/', (req, res) => {
       
       <div class="features">
         <div class="feature">
-          <div class="feature-icon">🛒</div>
-          <div class="feature-title">تسوق سهل</div>
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛒</div>
+          <div style="font-weight: 600; margin-bottom: 0.5rem; color: #0f766e;">تسوق سهل</div>
           <p>تجربة تسوق بسيطة ومريحة</p>
         </div>
         <div class="feature">
-          <div class="feature-icon">🚚</div>
-          <div class="feature-title">توصيل سريع</div>
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚚</div>
+          <div style="font-weight: 600; margin-bottom: 0.5rem; color: #0f766e;">توصيل سريع</div>
           <p>توصيل لجميع المحافظات العراقية</p>
         </div>
         <div class="feature">
-          <div class="feature-icon">💰</div>
-          <div class="feature-title">أسعار منافسة</div>
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">💰</div>
+          <div style="font-weight: 600; margin-bottom: 0.5rem; color: #0f766e;">أسعار منافسة</div>
           <p>أفضل الأسعار في السوق</p>
         </div>
         <div class="feature">
-          <div class="feature-icon">⭐</div>
-          <div class="feature-title">جودة عالية</div>
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⭐</div>
+          <div style="font-weight: 600; margin-bottom: 0.5rem; color: #0f766e;">جودة عالية</div>
           <p>منتجات مضمونة الجودة</p>
         </div>
       </div>
@@ -185,32 +180,22 @@ app.get('/', (req, res) => {
     let currentDisplayLimit = 20;
     let selectedCategory = null;
     
-    // Icons for products based on category
     const categoryIcons = {
-      1: '🍳', // أدوات الطهي
-      2: '🍽️', // أدوات المائدة  
-      3: '📦', // التخزين
-      4: '🥘', // المقلاة
-      5: '☕', // الشاي والقهوة
-      6: '🛁', // الحمام
-      7: '⚡'  // الأجهزة الكهربائية
+      1: '🍳', 2: '🍽️', 3: '📦', 4: '🥘', 5: '☕', 6: '🛁', 7: '⚡'
     };
     
     async function loadData() {
       try {
-        // Load categories
         const categoriesResponse = await fetch('/api/categories');
         const categories = await categoriesResponse.json();
         renderCategories(categories);
         
-        // Load products
         const productsResponse = await fetch('/api/products');
         allProducts = await productsResponse.json();
         filteredProducts = allProducts;
         updateDisplay();
       } catch (error) {
         console.error('خطأ في تحميل البيانات:', error);
-        // Fallback to sample data
         allProducts = ${JSON.stringify(sampleProducts)};
         filteredProducts = allProducts;
         renderCategories(${JSON.stringify(categories)});
@@ -220,12 +205,11 @@ app.get('/', (req, res) => {
     
     function renderCategories(categories) {
       const container = document.getElementById('categories');
-      container.innerHTML = \`
-        <div class="category-btn active" onclick="filterByCategory(null)">الكل</div>
-        \${categories.map(cat => 
-          \`<div class="category-btn" onclick="filterByCategory(\${cat.id})">\${cat.icon || '📁'} \${cat.nameAr || cat.name}</div>\`
-        ).join('')}
-      \`;
+      let html = '<div class="category-btn active" onclick="filterByCategory(null)">الكل</div>';
+      categories.forEach(cat => {
+        html += '<div class="category-btn" onclick="filterByCategory(' + cat.id + ')">' + (cat.icon || '📁') + ' ' + (cat.nameAr || cat.name) + '</div>';
+      });
+      container.innerHTML = html;
     }
     
     function updateDisplay() {
@@ -242,16 +226,18 @@ app.get('/', (req, res) => {
         return;
       }
       
-      container.innerHTML = displayedProducts.map(product => \`
-        <div class="product-card">
-          <div class="product-image">\${categoryIcons[product.categoryId || product.category_id] || '📦'}</div>
-          <div class="product-name">\${product.name}</div>
-          <div class="product-price">\${parseInt(product.price || 0).toLocaleString()} د.ع</div>
-          <div class="product-code">كود المنتج: \${product.productCode || product.product_code || 'غير متاح'}</div>
-          <div class="product-rating">⭐ \${product.rating || 4.5} (\${product.reviewCount || product.review_count || 0} مراجعة)</div>
-          <button class="btn" onclick="orderProduct('\${product.name}', '\${product.productCode || product.product_code}', \${product.price})">اطلب الآن</button>
-        </div>
-      \`).join('');
+      let html = '';
+      displayedProducts.forEach(product => {
+        html += '<div class="product-card">';
+        html += '<div class="product-image">' + (categoryIcons[product.categoryId || product.category_id] || '📦') + '</div>';
+        html += '<div class="product-name">' + product.name + '</div>';
+        html += '<div class="product-price">' + parseInt(product.price || 0).toLocaleString() + ' د.ع</div>';
+        html += '<div class="product-code">كود المنتج: ' + (product.productCode || product.product_code || 'غير متاح') + '</div>';
+        html += '<div class="product-rating">⭐ ' + (product.rating || 4.5) + ' (' + (product.reviewCount || product.review_count || 0) + ' مراجعة)</div>';
+        html += '<button class="btn" onclick="orderProduct(\'' + product.name + '\', \'' + (product.productCode || product.product_code) + '\', ' + product.price + ')">اطلب الآن</button>';
+        html += '</div>';
+      });
+      container.innerHTML = html;
     }
     
     function updatePagination() {
@@ -261,11 +247,7 @@ app.get('/', (req, res) => {
     
     function updateLoadMoreButton() {
       const container = document.getElementById('load-more-container');
-      if (displayedProducts.length < filteredProducts.length) {
-        container.style.display = 'block';
-      } else {
-        container.style.display = 'none';
-      }
+      container.style.display = displayedProducts.length < filteredProducts.length ? 'block' : 'none';
     }
     
     function loadMoreProducts() {
@@ -277,7 +259,6 @@ app.get('/', (req, res) => {
       selectedCategory = categoryId;
       currentDisplayLimit = 20;
       
-      // Update active category button
       const buttons = document.querySelectorAll('.category-btn');
       buttons.forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
@@ -316,21 +297,21 @@ app.get('/', (req, res) => {
     }
     
     function orderProduct(productName, productCode, price) {
-      const message = \`أريد طلب المنتج التالي:\\n\\n\` +
-                   \`📦 اسم المنتج: \${productName}\\n\` +
-                   \`🔢 كود المنتج: \${productCode}\\n\` +
-                   \`💰 السعر: \${parseInt(price || 0).toLocaleString()} د.ع\\n\\n\` +
-                   \`يرجى تأكيد الطلب وتزويدي بمعلومات التوصيل.\`;
+      const message = 'أريد طلب المنتج التالي:\\n\\n' +
+                   '📦 اسم المنتج: ' + productName + '\\n' +
+                   '🔢 كود المنتج: ' + productCode + '\\n' +
+                   '💰 السعر: ' + parseInt(price || 0).toLocaleString() + ' د.ع\\n\\n' +
+                   'يرجى تأكيد الطلب وتزويدي بمعلومات التوصيل.';
       
-      alert(\`تم اختيار المنتج!\\n\\nللطلب يرجى التواصل معنا على:\\n📧 Lasker189@gmail.com\\n\\nأو نسخ الرسالة التالية:\\n\\n\${message}\`);
+      alert('تم اختيار المنتج!\\n\\nللطلب يرجى التواصل معنا على:\\n📧 Lasker189@gmail.com\\n\\nأو نسخ الرسالة التالية:\\n\\n' + message);
     }
     
-    // Load data when page loads
     window.addEventListener('load', loadData);
   </script>
 </body>
-</html>
-  \`);
+</html>`;
+  
+  res.send(htmlContent);
 });
 
 // API Routes
@@ -351,22 +332,21 @@ app.get('/api/categories', async (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
     if (pool) {
-      // إضافة timeout للاستعلام
       const result = await Promise.race([
         pool.query('SELECT * FROM products ORDER BY id DESC LIMIT 200'),
         new Promise((_, reject) => 
           setTimeout(() => reject(new Error('Query timeout')), 15000)
         )
       ]);
-      console.log(`✅ تم تحميل ${result.rows.length} منتج من قاعدة البيانات`);
+      console.log('تم تحميل ' + result.rows.length + ' منتج من قاعدة البيانات');
       res.json(result.rows);
     } else {
-      console.log('📦 استخدام البيانات التجريبية');
+      console.log('استخدام البيانات التجريبية');
       res.json(sampleProducts);
     }
   } catch (error) {
     console.error('خطأ في قاعدة البيانات:', error.message);
-    console.log('🔄 التبديل للبيانات التجريبية');
+    console.log('التبديل للبيانات التجريبية');
     res.json(sampleProducts);
   }
 });
@@ -378,57 +358,40 @@ app.post('/api/orders', async (req, res) => {
     const mailOptions = {
       from: process.env.EMAIL_USER || 'Lasker189@gmail.com',
       to: 'Lasker189@gmail.com',
-      subject: \`🛒 طلب جديد من مستلزمات بيوتنا - \${customerName}\`,
-      html: \`
-        <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
-          <div style="background: #0f766e; color: white; padding: 20px; text-align: center;">
-            <h1>🏠 مستلزمات بيوتنا</h1>
-            <h2>طلب جديد من العميل</h2>
-          </div>
-          
-          <div style="padding: 20px;">
-            <h3 style="color: #0f766e; border-bottom: 2px solid #0f766e; padding-bottom: 10px;">معلومات العميل</h3>
-            <p><strong>الاسم:</strong> \${customerName}</p>
-            <p><strong>رقم الهاتف:</strong> \${phone}</p>
-            <p><strong>المحافظة:</strong> \${province}</p>
-            <p><strong>العنوان:</strong> \${address}</p>
-            
-            <h3 style="color: #0f766e; border-bottom: 2px solid #0f766e; padding-bottom: 10px; margin-top: 30px;">المنتجات المطلوبة</h3>
-            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-              <thead>
-                <tr style="background: #f0fdf4;">
-                  <th style="border: 1px solid #0f766e; padding: 10px;">المنتج</th>
-                  <th style="border: 1px solid #0f766e; padding: 10px;">الكمية</th>
-                  <th style="border: 1px solid #0f766e; padding: 10px;">السعر</th>
-                  <th style="border: 1px solid #0f766e; padding: 10px;">المجموع</th>
-                </tr>
-              </thead>
-              <tbody>
-                \${products.map(p => \`
-                  <tr>
-                    <td style="border: 1px solid #ddd; padding: 10px;">\${p.name}</td>
-                    <td style="border: 1px solid #ddd; padding: 10px; text-align: center;">\${p.quantity}</td>
-                    <td style="border: 1px solid #ddd; padding: 10px;">\${parseInt(p.price).toLocaleString()} د.ع</td>
-                    <td style="border: 1px solid #ddd; padding: 10px;">\${parseInt(p.price * p.quantity).toLocaleString()} د.ع</td>
-                  </tr>
-                \`).join('')}
-              </tbody>
-            </table>
-            
-            <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="color: #0f766e; margin: 0;">المجموع الكلي: \${parseInt(total).toLocaleString()} دينار عراقي</h3>
-            </div>
-            
-            <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
-              <p><strong>ملاحظة:</strong> يرجى التواصل مع العميل لتأكيد الطلب وترتيب التوصيل.</p>
-            </div>
-          </div>
-        </div>
-      \`
+      subject: '🛒 طلب جديد من مستلزمات بيوتنا - ' + customerName,
+      html: '<div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">' +
+        '<div style="background: #0f766e; color: white; padding: 20px; text-align: center;">' +
+        '<h1>🏠 مستلزمات بيوتنا</h1><h2>طلب جديد من العميل</h2></div>' +
+        '<div style="padding: 20px;">' +
+        '<h3 style="color: #0f766e;">معلومات العميل</h3>' +
+        '<p><strong>الاسم:</strong> ' + customerName + '</p>' +
+        '<p><strong>رقم الهاتف:</strong> ' + phone + '</p>' +
+        '<p><strong>المحافظة:</strong> ' + province + '</p>' +
+        '<p><strong>العنوان:</strong> ' + address + '</p>' +
+        '<h3 style="color: #0f766e;">المنتجات المطلوبة</h3>' +
+        '<table style="width: 100%; border-collapse: collapse;">' +
+        '<thead><tr style="background: #f0fdf4;">' +
+        '<th style="border: 1px solid #0f766e; padding: 10px;">المنتج</th>' +
+        '<th style="border: 1px solid #0f766e; padding: 10px;">الكمية</th>' +
+        '<th style="border: 1px solid #0f766e; padding: 10px;">السعر</th>' +
+        '<th style="border: 1px solid #0f766e; padding: 10px;">المجموع</th>' +
+        '</tr></thead><tbody>' +
+        products.map(p => 
+          '<tr>' +
+          '<td style="border: 1px solid #ddd; padding: 10px;">' + p.name + '</td>' +
+          '<td style="border: 1px solid #ddd; padding: 10px; text-align: center;">' + p.quantity + '</td>' +
+          '<td style="border: 1px solid #ddd; padding: 10px;">' + parseInt(p.price).toLocaleString() + ' د.ع</td>' +
+          '<td style="border: 1px solid #ddd; padding: 10px;">' + parseInt(p.price * p.quantity).toLocaleString() + ' د.ع</td>' +
+          '</tr>'
+        ).join('') +
+        '</tbody></table>' +
+        '<div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0;">' +
+        '<h3 style="color: #0f766e; margin: 0;">المجموع الكلي: ' + parseInt(total).toLocaleString() + ' دينار عراقي</h3>' +
+        '</div></div></div>'
     };
 
     await transporter.sendMail(mailOptions);
-    console.log(\`✅ تم إرسال طلب جديد من \${customerName} - المجموع: \${total} د.ع\`);
+    console.log('تم إرسال طلب جديد من ' + customerName + ' - المجموع: ' + total + ' د.ع');
     
     res.json({ success: true, message: 'تم إرسال طلبك بنجاح! سنتواصل معك قريباً.' });
   } catch (error) {
@@ -438,7 +401,7 @@ app.post('/api/orders', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(\`🚀 مستلزمات بيوتنا - الخادم يعمل على المنفذ \${PORT}\`);
-  console.log(\`📦 \${pool ? 'متصل بقاعدة البيانات' : 'يعمل بالبيانات التجريبية'}\`);
-  console.log(\`📧 خدمة البريد الإلكتروني جاهزة للطلبات\`);
+  console.log('🚀 مستلزمات بيوتنا - الخادم يعمل على المنفذ ' + PORT);
+  console.log('📦 ' + (pool ? 'متصل بقاعدة البيانات' : 'يعمل بالبيانات التجريبية'));
+  console.log('📧 خدمة البريد الإلكتروني جاهزة للطلبات');
 });
