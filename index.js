@@ -10,12 +10,21 @@ const PORT = process.env.PORT || 3000;
 app.use(compression());
 app.use(express.json());
 
-// Database connection (if DATABASE_URL is provided)
+// Database connection optimized for Railway
 let pool;
 if (process.env.DATABASE_URL) {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
+    max: 2, // تقليل عدد الاتصالات للاستقرار
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 60000,
+    statementTimeout: 30000
+  });
+  
+  // معالجة أخطاء الاتصال
+  pool.on('error', (err) => {
+    console.error('Database connection error:', err);
   });
 }
 
@@ -342,13 +351,22 @@ app.get('/api/categories', async (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
     if (pool) {
-      const result = await pool.query('SELECT * FROM products ORDER BY id DESC');
+      // إضافة timeout للاستعلام
+      const result = await Promise.race([
+        pool.query('SELECT * FROM products ORDER BY id DESC LIMIT 200'),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Query timeout')), 15000)
+        )
+      ]);
+      console.log(`✅ تم تحميل ${result.rows.length} منتج من قاعدة البيانات`);
       res.json(result.rows);
     } else {
+      console.log('📦 استخدام البيانات التجريبية');
       res.json(sampleProducts);
     }
   } catch (error) {
-    console.error('Database error:', error);
+    console.error('خطأ في قاعدة البيانات:', error.message);
+    console.log('🔄 التبديل للبيانات التجريبية');
     res.json(sampleProducts);
   }
 });
