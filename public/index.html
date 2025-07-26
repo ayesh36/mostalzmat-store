@@ -1,319 +1,162 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مستلزمات بيوتنا - المتجر الأحدث في العراق</title>
-  <meta name="description" content="متجر مستلزمات بيوتنا - أفضل أدوات المطبخ العراقي بأسعار منافسة وتوصيل سريع">
-  
-  <meta property="og:title" content="مستلزمات بيوتنا - المتجر الأحدث في العراق">
-  <meta property="og:description" content="متجر أدوات المطبخ العراقي - جودة عالية وأسعار منافسة">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mostalzmat-store.up.railway.app">
-  
-  <meta http-equiv="Content-Language" content="ar-IQ">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      font-family: 'Noto Sans Arabic', sans-serif !important;
-      direction: rtl;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>مستلزمات بيوتنا</title>
+    <meta name="description" content="مستلزمات بيوتنا - المتجر الأحدث في العراق للأدوات المنزلية والمطبخ. شحن مجاني للطلبات أكثر من 100,000 د.ع">
+    <meta name="theme-color" content="#1B5E5C">
     
-    body {
-      background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
-      color: #1f2937;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    
-    .header {
-      text-align: center;
-      color: white;
-      padding: 2rem 0;
-    }
-    
-    .logo {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    .tagline {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-    
-    .main-content {
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      margin: 2rem 0;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    }
-    
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-    }
-    
-    .product-card {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      background: #f9fafb;
-    }
-    
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-    
-    .product-image {
-      width: 100%;
-      height: 200px;
-      background: #f3f4f6;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    
-    .product-name {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #1f2937;
-    }
-    
-    .product-price {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #0f766e;
-      margin-bottom: 1rem;
-    }
-    
-    .product-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      color: #6b7280;
-    }
-    
-    .btn {
-      background: #0f766e;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      width: 100%;
-    }
-    
-    .btn:hover {
-      background: #0d9488;
-    }
-    
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin: 3rem 0;
-    }
-    
-    .feature {
-      text-align: center;
-      padding: 2rem;
-      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
-      border-radius: 12px;
-    }
-    
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    
-    .feature-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #0f766e;
-    }
-    
-    .contact-info {
-      background: #0f766e;
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      margin: 2rem 0;
-    }
-    
-    .contact-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    
-    .contact-details {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-    
-    .footer {
-      text-align: center;
-      color: white;
-      padding: 2rem 0;
-      opacity: 0.8;
-    }
-    
-    @media (max-width: 768px) {
-      .container {
-        padding: 10px;
+    <!-- Force Arabic Language and RTL Direction -->
+    <meta http-equiv="Content-Language" content="ar">
+    <meta name="language" content="Arabic">
+    <meta name="geo.region" content="IQ">
+    <meta name="geo.country" content="Iraq">
+    <style>
+      html { 
+        direction: rtl !important; 
+        lang: ar !important;
+      }
+      body { 
+        direction: rtl !important; 
+        font-family: 'Noto Sans Arabic', 'Inter', Arial, sans-serif !important;
+        -webkit-locale: "ar" !important;
+      }
+      * { 
+        direction: inherit !important; 
+        font-family: 'Noto Sans Arabic', 'Inter', Arial, sans-serif !important;
+        text-align: right !important;
+      }
+      input, textarea, select { 
+        direction: rtl !important; 
+        text-align: right !important;
+      }
+      /* Force English numbering for prices and numbers */
+      .price, .rating, .count, .quantity, .numeric, .dinar-amount {
+        font-variant-numeric: lining-nums !important;
+        direction: ltr !important;
+        display: inline-block !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+        unicode-bidi: isolate !important;
+        font-feature-settings: "lnum" 1 !important;
+        -webkit-locale: "en-US" !important;
       }
       
-      .logo {
-        font-size: 2rem;
+      /* Override Arabic digits with CSS content replacement */
+      [class*="price"] {
+        font-family: 'Inter', Arial, sans-serif !important;
+        direction: ltr !important;
+        unicode-bidi: isolate !important;
       }
-      
-      .tagline {
-        font-size: 1.2rem;
-      }
-      
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .features {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <div class="logo">🏠 مستلزمات بيوتنا</div>
-      <div class="tagline">المتجر الأحدث في العراق</div>
-    </div>
+    </style>
+    <link rel="icon" type="image/png" href="/assets/logo.png">
+    <link rel="apple-touch-icon" href="/assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <div class="main-content">
-      <h2 style="text-align: center; margin-bottom: 2rem; color: #0f766e; font-size: 2rem;">منتجاتنا المميزة</h2>
-      
-      <div class="products-grid" id="products-container">
-        <!-- Products will be loaded here -->
-      </div>
-      
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">🛒</div>
-          <div class="feature-title">تسوق سهل</div>
-          <p>تجربة تسوق بسيطة ومريحة من الهاتف أو الكمبيوتر</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🚚</div>
-          <div class="feature-title">توصيل سريع</div>
-          <p>توصيل لجميع المحافظات العراقية خلال 1-3 أيام</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">💰</div>
-          <div class="feature-title">أسعار منافسة</div>
-          <p>أفضل الأسعار في السوق مع ضمان الجودة</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">⭐</div>
-          <div class="feature-title">جودة عالية</div>
-          <p>منتجات مضمونة الجودة من أفضل الماركات</p>
-        </div>
-      </div>
-      
-      <div class="contact-info">
-        <div class="contact-title">اطلب الآن</div>
-        <div class="contact-details">
-          📞 للطلب: اتصل أو راسل على واتساب<br>
-          📧 البريد الإلكتروني: Lasker189@gmail.com<br>
-          🌐 الموقع: https://mostalzmat-store.up.railway.app
-        </div>
-      </div>
-    </div>
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="مستلزمات بيوتنا">
+    <link rel="manifest" href="/manifest.json">
     
-    <div class="footer">
-      <p>© 2025 مستلزمات بيوتنا - جميع الحقوق محفوظة</p>
-      <p>المتجر الأحدث في العراق لأدوات المطبخ</p>
-    </div>
-  </div>
-
-  <script>
-    document.documentElement.lang = 'ar';
-    document.documentElement.dir = 'rtl';
-    
-    async function loadProducts() {
-      try {
-        const response = await fetch('/api/products');
-        const products = await response.json();
-        
-        const container = document.getElementById('products-container');
-        container.innerHTML = products.map(product => `
-          <div class="product-card">
-            <div class="product-image">${getProductIcon(product.categoryId)}</div>
-            <div class="product-name">${product.nameAr}</div>
-            <div class="product-price">${parseInt(product.price).toLocaleString()} د.ع</div>
-            <div class="product-rating">
-              <span>⭐ ${product.rating}</span>
-              <span>(${product.reviewCount} مراجعة)</span>
-            </div>
-            <button class="btn" onclick="orderProduct('${product.name}')">اطلب الآن</button>
-          </div>
-        `).join('');
-      } catch (error) {
-        console.error('Error loading products:', error);
-        document.getElementById('products-container').innerHTML = `
-          <div style="text-align: center; color: #ef4444; padding: 2rem;">
-            <h3>عذراً، حدث خطأ في تحميل المنتجات</h3>
-            <p>يرجى المحاولة مرة أخرى أو التواصل معنا مباشرة</p>
-          </div>
-        `;
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="مستلزمات بيوتنا">
+    <meta property="og:description" content="مستلزمات بيوتنا - المتجر الأحدث في العراق للأدوات المنزلية والمطبخ">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/logo.png">
+    <meta property="og:locale" content="ar_IQ">
+    <script type="module" crossorigin src="/assets/index-CjC9hsxo.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-QRwEPSwk.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Force Arabic locale and RTL direction for all browsers
+      document.documentElement.setAttribute('lang', 'ar');
+      document.documentElement.setAttribute('dir', 'rtl');
+      document.body.setAttribute('dir', 'rtl');
+      
+      // Override browser language detection
+      if (navigator.language) {
+        Object.defineProperty(navigator, 'language', {
+          get: function() { return 'ar-IQ'; }
+        });
       }
-    }
-    
-    function getProductIcon(categoryId) {
-      const icons = {
-        1: '🍳',
-        2: '📦',
-        3: '☕',
-        4: '🧁',
-        5: '🍽️'
+      if (navigator.languages) {
+        Object.defineProperty(navigator, 'languages', {
+          get: function() { return ['ar-IQ', 'ar']; }
+        });
+      }
+      
+      // Arabic to English digit conversion map
+      const arabicToEnglish = {
+        '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+        '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9'
       };
-      return icons[categoryId] || '🏠';
-    }
-    
-    function orderProduct(productName) {
-      alert(`لطلب ${productName}، يرجى التواصل معنا على:\\n\\n📞 الهاتف أو واتساب\\n📧 Lasker189@gmail.com`);
-    }
-    
-    window.addEventListener('load', loadProducts);
-  </script>
-</body>
+      
+      function convertArabicToEnglishDigits(text) {
+        return text.replace(/[٠-٩]/g, function(match) {
+          return arabicToEnglish[match] || match;
+        });
+      }
+      
+      // Force RTL for all dynamic content and convert digits
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) { // Element node
+              node.setAttribute && node.setAttribute('dir', 'rtl');
+              if (node.style) {
+                node.style.direction = 'rtl';
+                node.style.textAlign = 'right';
+              }
+              
+              // Convert Arabic digits to English in price elements
+              const priceElements = node.querySelectorAll ? 
+                node.querySelectorAll('.price, [class*="price"], .dinar-amount, .rating, .quantity') : [];
+              priceElements.forEach(function(el) {
+                if (el.textContent) {
+                  el.textContent = convertArabicToEnglishDigits(el.textContent);
+                }
+              });
+              
+              // Also check if the node itself is a price element
+              if (node.className && (node.className.includes('price') || node.className.includes('rating') || node.className.includes('quantity'))) {
+                if (node.textContent) {
+                  node.textContent = convertArabicToEnglishDigits(node.textContent);
+                }
+              }
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      
+      // Convert existing elements on page load
+      setTimeout(function() {
+        const allPriceElements = document.querySelectorAll('.price, [class*="price"], .dinar-amount, .rating, .quantity');
+        allPriceElements.forEach(function(el) {
+          if (el.textContent) {
+            el.textContent = convertArabicToEnglishDigits(el.textContent);
+          }
+        });
+      }, 1000);
+      
+      // Periodic conversion for any missed elements - reduced frequency
+      setInterval(function() {
+        const priceElements = document.querySelectorAll('.price, [class*="price"], .dinar-amount, .rating, .quantity');
+        priceElements.forEach(function(el) {
+          if (el.textContent && /[٠-٩]/.test(el.textContent)) {
+            el.textContent = convertArabicToEnglishDigits(el.textContent);
+          }
+        });
+      }, 5000);
+    </script>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
 </html>
