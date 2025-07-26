@@ -12,6 +12,14 @@ const products = [
   { id: 3, name: "خلاط كهربائي", price: 125000, rating: 4.7, reviewCount: 31, categoryId: 2 }
 ];
 
+app.get('/', (req, res) => {
+  res.send('<h1>مستلزمات بيوتنا</h1><p>المتجر الأحدث في العراق</p>');
+});
+
+app.get('/api/products', (req, res) => {
+  res.json(products);
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log('Server running on port ' + PORT);
 });
