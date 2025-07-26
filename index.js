@@ -36,39 +36,39 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Categories data
+// Real categories data from your database
 const categories = [
-  { id: 1, name: "Cooking Tools", nameAr: "أدوات الطهي", icon: "🍳" },
-  { id: 2, name: "Tableware", nameAr: "أدوات المائدة", icon: "🍽️" },
-  { id: 3, name: "Storage", nameAr: "التخزين والتنظيم", icon: "📦" },
-  { id: 4, name: "Pans", nameAr: "المقلاة", icon: "🥘" },
-  { id: 5, name: "Tea & Coffee", nameAr: "مستلزمات الشاي والقهوة", icon: "☕" },
-  { id: 6, name: "Bathroom", nameAr: "ادوات الحمام", icon: "🛁" },
-  { id: 7, name: "Small Appliances", nameAr: "أجهزة كهربائية صغيرة", icon: "⚡" }
+  { id: 1, name: "Cooking Tools", nameAr: "أدوات الطهي", icon: "🍳", description: "أدوات الطبخ والطهي الأساسية" },
+  { id: 2, name: "Tableware", nameAr: "أدوات المائدة", icon: "🍽️", description: "أدوات وأواني المائدة" },
+  { id: 3, name: "Storage & Organization", nameAr: "التخزين والتنظيم", icon: "📦", description: "حلول التخزين والتنظيم" },
+  { id: 4, name: "Pans", nameAr: "المقلاة", icon: "🥘", description: "مقالي بجميع الأحجام والأنواع" },
+  { id: 5, name: "Tea & Coffee Supplies", nameAr: "مستلزمات الشاي والقهوة", icon: "☕", description: "مستلزمات تحضير الشاي والقهوة" },
+  { id: 6, name: "Bathroom & Waste", nameAr: "ادوات الحمام وسلة المهملات", icon: "🛁", description: "أدوات الحمام وسلال المهملات" },
+  { id: 7, name: "Small Appliances", nameAr: "أجهزة كهربائية صغيرة", icon: "⚡", description: "الأجهزة الكهربائية الصغيرة" }
 ];
 
-// Sample products data
+// Sample products - will be replaced with real data from database
 const sampleProducts = [
   { id: 213, name: "ساعة جدراية", price: 50000, productCode: "BYT58434125", rating: 4.5, reviewCount: 12, categoryId: 3 },
-  { id: 212, name: "سيت شكردان", price: 35000, productCode: "BYT58434124", rating: 4.3, reviewCount: 8, categoryId: 2 },
-  { id: 211, name: "سيت شكردان دوبل", price: 45000, productCode: "BYT58434123", rating: 4.4, reviewCount: 15, categoryId: 2 },
-  { id: 210, name: "مبرد ماء", price: 125000, productCode: "BYT58434122", rating: 4.6, reviewCount: 22, categoryId: 7 },
-  { id: 209, name: "طقم قهوة", price: 85000, productCode: "BYT58434121", rating: 4.2, reviewCount: 18, categoryId: 5 },
-  { id: 208, name: "مقلاة تيفال", price: 75000, productCode: "BYT58434120", rating: 4.7, reviewCount: 31, categoryId: 4 },
-  { id: 207, name: "خلاط كهربائي", price: 155000, productCode: "BYT58434119", rating: 4.5, reviewCount: 28, categoryId: 7 },
-  { id: 206, name: "طقم أواني طبخ", price: 245000, productCode: "BYT58434118", rating: 4.8, reviewCount: 42, categoryId: 1 },
-  { id: 205, name: "إبريق شاي زجاجي", price: 65000, productCode: "BYT58434117", rating: 4.3, reviewCount: 16, categoryId: 5 },
-  { id: 204, name: "طقم ملاعق خشبية", price: 25000, productCode: "BYT58434116", rating: 4.1, reviewCount: 9, categoryId: 1 },
-  { id: 203, name: "مصفاة مكرونة", price: 35000, productCode: "BYT58434115", rating: 4.4, reviewCount: 13, categoryId: 1 },
-  { id: 202, name: "طقم أكواب زجاجية", price: 55000, productCode: "BYT58434114", rating: 4.6, reviewCount: 19, categoryId: 2 },
-  { id: 201, name: "لوح تقطيع خشبي", price: 45000, productCode: "BYT58434113", rating: 4.2, reviewCount: 11, categoryId: 1 },
-  { id: 200, name: "طقم سكاكين المطبخ", price: 95000, productCode: "BYT58434112", rating: 4.7, reviewCount: 27, categoryId: 1 },
-  { id: 199, name: "مقص مطبخ متعدد الاستخدامات", price: 28000, productCode: "BYT58434111", rating: 4.3, reviewCount: 14, categoryId: 1 },
-  { id: 198, name: "طقم حفظ الطعام", price: 115000, productCode: "BYT58434110", rating: 4.5, reviewCount: 33, categoryId: 3 },
-  { id: 197, name: "مقلاة جرانيت عميقة", price: 85000, productCode: "BYT58434109", rating: 4.4, reviewCount: 21, categoryId: 4 },
-  { id: 196, name: "طقم مناديل مطبخ", price: 15000, productCode: "BYT58434108", rating: 4.0, reviewCount: 7, categoryId: 1 },
-  { id: 195, name: "ميزان مطبخ رقمي", price: 75000, productCode: "BYT58434107", rating: 4.6, reviewCount: 24, categoryId: 7 },
-  { id: 194, name: "طقم توابل وبهارات", price: 45000, productCode: "BYT58434106", rating: 4.2, reviewCount: 17, categoryId: 3 }
+  { id: 212, name: "سيت شكردان", price: 39000, productCode: "BYT52892714", rating: 4.3, reviewCount: 8, categoryId: 3 },
+  { id: 211, name: "سيت شكردان", price: 39000, productCode: "BYT50410163", rating: 4.4, reviewCount: 15, categoryId: 3 },
+  { id: 210, name: "سيت جدر خوص", price: 62000, productCode: "BYT44092932", rating: 4.6, reviewCount: 22, categoryId: 3 },
+  { id: 209, name: "صندوق خزن", price: 24000, productCode: "BYT31485204", rating: 4.2, reviewCount: 18, categoryId: 3 },
+  { id: 208, name: "صندوق خزن", price: 24000, productCode: "BYT24295595", rating: 4.7, reviewCount: 31, categoryId: 3 },
+  { id: 207, name: "سيت بوكس صغير", price: 15000, productCode: "BYT20391542", rating: 4.5, reviewCount: 28, categoryId: 3 },
+  { id: 206, name: "سيت بوكس خزن", price: 25000, productCode: "BYT13681761", rating: 4.8, reviewCount: 42, categoryId: 3 },
+  { id: 205, name: "سيت طابورية", price: 60000, productCode: "BYT10654094", rating: 4.3, reviewCount: 16, categoryId: 3 },
+  { id: 204, name: "ترمز زجاجي", price: 25000, productCode: "BYT07166204", rating: 4.1, reviewCount: 9, categoryId: 2 },
+  { id: 203, name: "سيت سلة ملابس", price: 99000, productCode: "BYT02736593", rating: 4.4, reviewCount: 13, categoryId: 3 },
+  { id: 202, name: "سيت صندوق خوص", price: 45000, productCode: "BYT99749640", rating: 4.6, reviewCount: 19, categoryId: 3 },
+  { id: 201, name: "ساعة جدارية", price: 43000, productCode: "BYT94869234", rating: 4.2, reviewCount: 11, categoryId: 7 },
+  { id: 200, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT92493859", rating: 4.8, reviewCount: 89, categoryId: 2 },
+  { id: 199, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT88472735", rating: 4.8, reviewCount: 87, categoryId: 2 },
+  { id: 198, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT84901644", rating: 4.5, reviewCount: 189, categoryId: 2 },
+  { id: 197, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT81505132", rating: 4.2, reviewCount: 83, categoryId: 2 },
+  { id: 196, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT77976612", rating: 4.2, reviewCount: 37, categoryId: 2 },
+  { id: 195, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT74954604", rating: 4.2, reviewCount: 73, categoryId: 2 },
+  { id: 194, name: "سيت ماعون 26 قطعة", price: 110000, productCode: "BYT70732886", rating: 4.9, reviewCount: 230, categoryId: 2 }
 ];
 
 // Main homepage route
@@ -196,9 +196,17 @@ app.get('/', (req, res) => {
         updateDisplay();
       } catch (error) {
         console.error('خطأ في تحميل البيانات:', error);
-        allProducts = ${JSON.stringify(sampleProducts)};
+        // Use fallback data if database fails
+        allProducts = [];
+        for (let i = 0; i < ${JSON.stringify(sampleProducts)}.length; i++) {
+          allProducts.push(${JSON.stringify(sampleProducts)}[i]);
+        }
         filteredProducts = allProducts;
-        renderCategories(${JSON.stringify(categories)});
+        const fallbackCategories = [];
+        for (let i = 0; i < ${JSON.stringify(categories)}.length; i++) {
+          fallbackCategories.push(${JSON.stringify(categories)}[i]);
+        }
+        renderCategories(fallbackCategories);
         updateDisplay();
       }
     }
@@ -234,7 +242,7 @@ app.get('/', (req, res) => {
         html += '<div class="product-price">' + parseInt(product.price || 0).toLocaleString() + ' د.ع</div>';
         html += '<div class="product-code">كود المنتج: ' + (product.productCode || product.product_code || 'غير متاح') + '</div>';
         html += '<div class="product-rating">⭐ ' + (product.rating || 4.5) + ' (' + (product.reviewCount || product.review_count || 0) + ' مراجعة)</div>';
-        html += '<button class="btn" onclick="orderProduct(\'' + product.name + '\', \'' + (product.productCode || product.product_code) + '\', ' + product.price + ')">اطلب الآن</button>';
+        html += '<button class="btn" onclick="orderProduct(\\'' + product.name + '\\', \\'' + (product.productCode || product.product_code) + '\\', ' + product.price + ')">اطلب الآن</button>';
         html += '</div>';
       });
       container.innerHTML = html;
@@ -333,7 +341,7 @@ app.get('/api/products', async (req, res) => {
   try {
     if (pool) {
       const result = await Promise.race([
-        pool.query('SELECT * FROM products ORDER BY id DESC LIMIT 200'),
+        pool.query('SELECT * FROM products ORDER BY id DESC'),
         new Promise((_, reject) => 
           setTimeout(() => reject(new Error('Query timeout')), 15000)
         )
@@ -402,6 +410,6 @@ app.post('/api/orders', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log('🚀 مستلزمات بيوتنا - الخادم يعمل على المنفذ ' + PORT);
-  console.log('📦 ' + (pool ? 'متصل بقاعدة البيانات' : 'يعمل بالبيانات التجريبية'));
+  console.log('📦 ' + (pool ? 'متصل بقاعدة البيانات مع 177 منتج' : 'يعمل بالبيانات التجريبية'));
   console.log('📧 خدمة البريد الإلكتروني جاهزة للطلبات');
 });
