@@ -1,17 +1,16 @@
 {
   "name": "mostalzmat-store",
-  "version": "2.0.0",
-  "description": "مستلزمات بيوتنا - متجر أدوات المطبخ العراقي",
+  "version": "1.0.0", 
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "build": "echo 'Build completed'"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.21.2",
-    "compression": "^1.8.0",
-    "express-session": "^1.18.1",
-    "nodemailer": "^7.0.4"
+    "nodemailer": "^7.0.4", 
+    "pg": "^8.11.3",
+    "compression": "^1.8.0"
   },
   "engines": {
     "node": ">=18.0.0"
